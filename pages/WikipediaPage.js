@@ -1,34 +1,32 @@
-export class WikipediaPage {
+class WikipediaPage {
     constructor(page) {
         this.page = page;
         this.searchInput = 'input[name="search"]';
-        this.heading = '#firstHeading';
+        this.heading = 'h1';
         this.body = 'body';
     }
 
-    async gotoHome() {
-        await this.page.goto('https://www.wikipedia.org/');
+    async open(url) {
+        await this.page.goto(url);
     }
 
-    async gotoArticle(articleSlug) {
-        await this.page.goto(`https://en.wikipedia.org/wiki/${articleSlug}`);
-    }
-
-    async search(term) {
-        await this.page.fill(this.searchInput, term);
+    async search(text) {
+        await this.page.fill(this.searchInput, text);
         await this.page.keyboard.press('Enter');
-        await this.page.waitForSelector(this.heading);
+        await this.page.waitForLoadState();
     }
 
     async getHeadingText() {
-        return this.page.innerText(this.heading);
+        return await this.page.textContent(this.heading);
     }
 
     async getTitle() {
-        return this.page.title();
+        return await this.page.title();
     }
 
     async getBodyText() {
-        return this.page.textContent(this.body);
+        return await this.page.textContent(this.body);
     }
 }
+
+module.exports = { WikipediaPage };
