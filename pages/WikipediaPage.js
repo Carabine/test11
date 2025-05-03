@@ -37,3 +37,5 @@ class WikipediaPage {
         return await this.page.textContent(this.body);
     }
 }
+
+export { WikipediaPage };
