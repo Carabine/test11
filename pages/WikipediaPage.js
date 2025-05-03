@@ -10,6 +10,15 @@ class WikipediaPage {
         await this.page.goto(url);
     }
 
+    async gotoHome() {
+        await this.page.goto('https://en.wikipedia.org');
+    }
+
+    async gotoArticle(article) {
+        const url = `https://en.wikipedia.org/wiki/${encodeURIComponent(article)}`;
+        await this.page.goto(url);
+    }
+
     async search(text) {
         await this.page.fill(this.searchInput, text);
         await this.page.keyboard.press('Enter');
@@ -28,5 +37,3 @@ class WikipediaPage {
         return await this.page.textContent(this.body);
     }
 }
-
-module.exports = { WikipediaPage };
